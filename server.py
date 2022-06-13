@@ -36,7 +36,7 @@ class Eco(object):
 
     def message_delivery(self, message):
         self.current_msgs.append(message)
-        self.count = self.count + 1
+        self.count += 1
         signal.alarm(10)
         return "Msg delivered"
 
@@ -59,7 +59,7 @@ def get_name_in_args():
 
 
 def configure_server(ns_name: str):
-    eco = Eco()  # servant
+    eco = Eco(max_msgs=5)  # servant
     uri = daemon.register(eco)  # register pyro obj
     signal.signal(signal.SIGALRM, eco.time_out)
     print("uri:", uri)  # publish url
